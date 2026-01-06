@@ -1,0 +1,13 @@
+{
+  "name": "infera",
+  "private": true,
+  "packageManager": "pnpm@8.6.10",
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "lint": "turbo lint"
+  },
+  "devDependencies": {
+    "turbo": "^1.13.0"
+  }
+}
