@@ -1,15 +1,17 @@
-import { Query, Resolver, ObjectType, Field } from '@nestjs/graphql';
+"use strict"
+
+import { Resolver, Query, ObjectType, Field } from '@nestjs/graphql';
 
 @ObjectType()
 class HealthStatus {
     @Field()
-    status: string;
+    status!: string;
 }
 
 @Resolver()
 export class HealthResolver {
     @Query(() => HealthStatus)
-    health() {
+    health(): HealthStatus {
         return { status: 'OK' };
     }
 }
