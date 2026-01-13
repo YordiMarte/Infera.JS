@@ -11,26 +11,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.HealthResolver = void 0;
 const graphql_1 = require("@nestjs/graphql");
-let HealthStatus = class HealthStatus {
-};
-__decorate([
-    (0, graphql_1.Field)(),
-    __metadata("design:type", String)
-], HealthStatus.prototype, "status", void 0);
-HealthStatus = __decorate([
-    (0, graphql_1.ObjectType)()
-], HealthStatus);
 let HealthResolver = class HealthResolver {
     health() {
-        return { status: 'OK' };
+        return 'oK';
     }
 };
 exports.HealthResolver = HealthResolver;
 __decorate([
-    (0, graphql_1.Query)(() => HealthStatus),
+    (0, graphql_1.Query)(() => String),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", HealthStatus)
+    __metadata("design:returntype", String)
 ], HealthResolver.prototype, "health", null);
 exports.HealthResolver = HealthResolver = __decorate([
     (0, graphql_1.Resolver)()
