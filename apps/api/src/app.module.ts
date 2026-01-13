@@ -8,9 +8,9 @@ import { HealthModule } from './/health/health.module';
     imports: [
         GraphQLModule.forRoot<ApolloDriverConfig>({
             driver: ApolloDriver,
-            autoSchemaFile: join(process.cwd(), "schema.gql"),
+            autoSchemaFile: true,
+            playground: true
         }),
-        HealthModule,
     ],
 })
 export class AppModule {}
