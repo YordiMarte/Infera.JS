@@ -1,0 +1,10 @@
+{
+  "name": "@infera/config",
+  "version": "0.0.1",
+  "private": true,
+  "main": "./index.ts",
+  "scripts": {
+    "dev": "echo 'Config package'",
+    "build": "echo 'Building config'"
+  }
+}

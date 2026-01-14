@@ -1,13 +1,20 @@
 {
   "name": "infera",
   "private": true,
-  "packageManager": "pnpm@8.6.10",
+  "packageManager": "pnpm@9.0.0",
   "scripts": {
-    "dev": "turbo dev",
-    "build": "turbo build",
-    "lint": "turbo lint"
+    "dev:all": "pnpm -r --parallel dev",
+    "dev": "echo \"Use pnpm --filter @infera/api dev\"",
+    "build": "pnpm -r build",
+    "lint": "pnpm -r lint"
+  },
+  "dependencies": {
+    "@nestjs/common": "^11.1.11",
+    "@nestjs/core": "^11.1.11",
+    "@nestjs/platform-express": "^11.1.11"
   },
   "devDependencies": {
-    "turbo": "^1.13.0"
+    "@nestjs/cli": "^11.0.14",
+    "@nestjs/schematics": "^11"
   }
 }

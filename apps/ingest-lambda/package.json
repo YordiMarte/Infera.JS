@@ -1,0 +1,9 @@
+{
+  "name": "ingest-lambda",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "echo 'Lambda dev - configure AWS SAM or serverless-offline here'",
+    "build": "echo 'Building lambda'"
+  }
+}
