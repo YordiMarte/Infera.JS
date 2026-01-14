@@ -12,3 +12,80 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+enum ServiceType {
+  LAMBDA
+  EC2
+  S3
+}
+
+enum MetricType {
+  INVOCATIONS
+  ERRORS
+  LATENCY_MS
+  CPU
+  MEMORY
+}
+
+enum AlertType {
+  COST
+  ERROR_RATE
+  LATENCY
+}
+
+model Project {
+  id        String    @id @default(uuid())
+  name      String
+  apiKey    String    @unique
+  createdAt DateTime  @default(now())
+
+  services  Service[]
+  alerts    Alert[]
+}
+
+model Service {
+  id        String      @id @default(uuid())
+  projectId String
+  name      String
+  type      ServiceType
+  createdAt DateTime    @default(now())
+
+  project       Project       @relation(fields: [projectId], references: [id])
+  metrics       Metric[]
+  costSnapshots CostSnapshot[]
+}
+
+model Metric {
+  id        String     @id @default(uuid())
+  serviceId String
+  type      MetricType
+  value     Float
+  timestamp DateTime   @default(now())
+
+  service   Service    @relation(fields: [serviceId], references: [id])
+
+  @@index([serviceId, timestamp])
+}
+
+model CostSnapshot {
+  id        String     @id @default(uuid())
+  serviceId String
+  costUSD   Float
+  period    DateTime   // daily snapshot
+  createdAt DateTime   @default(now())
+
+  service   Service    @relation(fields: [serviceId], references: [id])
+
+  @@index([serviceId, period])
+}
+
+model Alert {
+  id         String     @id @default(uuid())
+  projectId  String
+  type       AlertType
+  threshold  Float
+  isActive   Boolean    @default(true)
+  createdAt  DateTime   @default(now())
+
+  project    Project    @relation(fields: [projectId], references: [id])
+}
