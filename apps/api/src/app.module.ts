@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { HealthResolver } from './health.resolver';
+import { IngestModule } from './Ingest/ingest.module';
 
 @Module({
     imports: [
@@ -10,6 +11,6 @@ import { HealthResolver } from './health.resolver';
             autoSchemaFile: true,
         }),
     ],
-    providers: [HealthResolver],
+    providers: [HealthResolver, IngestModule], 
 })
 export class AppModule {}

@@ -45,15 +45,16 @@ model Project {
 }
 
 model Service {
-  id        String      @id @default(uuid())
+  id        String   @id @default(uuid())
   projectId String
   name      String
   type      ServiceType
-  createdAt DateTime    @default(now())
 
-  project       Project       @relation(fields: [projectId], references: [id])
-  metrics       Metric[]
-  costSnapshots CostSnapshot[]
+  project   Project  @relation(fields: [projectId], references: [id])
+  metrics   Metric[]
+  costs     CostSnapshot[]
+
+  @@unique([projectId, name])
 }
 
 model Metric {
