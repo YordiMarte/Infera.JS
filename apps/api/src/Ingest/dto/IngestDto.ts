@@ -1,9 +1,4 @@
-export type ServiceType = "LAMBDA" | "ECS" | "EC2" | "K8S";
-
-export type MetricType =
-  | "INVOCATIONS"
-  | "ERRORS"
-  | "LATENCY_MS";
+import { ServiceType, MetricType } from "@prisma/client";
 
 export interface MetricDto {
   type: MetricType;
@@ -19,3 +14,6 @@ export interface IngestDto {
   service: ServiceDto;
   metrics: MetricDto[];
 }
+
+
+
