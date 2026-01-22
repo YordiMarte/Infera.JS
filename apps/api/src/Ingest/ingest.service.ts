@@ -7,34 +7,41 @@ import { Project } from "@prisma/client";
 export class IngestService {
     constructor(private prisma: PrismaService) {}
 
-    async ingest(project: Project, payload: IngestDto) {
+    async ingest(project: any, body: any) {
+        console.log('PROJECT: ', project);
+        console.log('BODY: ', body);
+
         const service = await this.prisma.service.upsert({
             where: {
                 projectId_name: {
                     projectId: project.id,
-                    name: payload.service.name,
+                    name: body.service.name,
                 },
             },
             update: {
-                type: payload.service.type,
+                type: body.service.type,
             },
             create: {
                 projectId: project.id,
-                name: payload.service.name,
-                type: payload.service.type,
+                name: body.service.name,
+                type: body.service.type,
             },
         });
 
-        for (const metric of payload.metrics) {
+        for (const metric of body.metrics) {
             await this.prisma.metric.create({
                 data: {
                     serviceId: service.id,
                     type: metric.type,
                     value: metric.value,
+                    projectId: project.id
                 }
             });
         }
 
         return { status: "ingested" };
+    } catch (error: any) {
+        console.error('INGEST ERROR: ', error);
+        throw error;
     }
-}   
+}

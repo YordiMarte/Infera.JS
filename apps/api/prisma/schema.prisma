@@ -48,13 +48,13 @@ model Service {
   id        String   @id @default(uuid())
   projectId String
   name      String
-  type      ServiceType
+  type      String
 
   project   Project  @relation(fields: [projectId], references: [id])
   metrics   Metric[]
   costs     CostSnapshot[]
 
-  @@unique([projectId, name])
+  @@unique([projectId, name], name: "projectId_name")
 }
 
 model Metric {
