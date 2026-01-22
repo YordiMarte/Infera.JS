@@ -6,20 +6,21 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppModule = void 0;
+exports.PrismaService = void 0;
+// src/prisma/prisma.service.ts
 const common_1 = require("@nestjs/common");
-const ingest_module_1 = require("./ingest/ingest.module");
-let AppModule = class AppModule {
+const client_1 = require("@prisma/client");
+let PrismaService = class PrismaService extends client_1.PrismaClient {
+    async onModuleInit() {
+        await this.$connect();
+        console.log('✅ Database connected');
+    }
+    async onModuleDestroy() {
+        await this.$disconnect();
+        console.log('❌ Database disconnected');
+    }
 };
-exports.AppModule = AppModule;
-exports.AppModule = AppModule = __decorate([
-    (0, common_1.Module)({
-        imports: [
-            ingest_module_1.IngestModule,
-            // GraphQLModule.forRoot<ApolloDriverConfig>({
-            //driver: ApolloDriver,
-            //autoSchemaFile: true,
-            //}),
-        ],
-    })
-], AppModule);
+exports.PrismaService = PrismaService;
+exports.PrismaService = PrismaService = __decorate([
+    (0, common_1.Injectable)()
+], PrismaService);

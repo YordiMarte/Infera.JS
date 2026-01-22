@@ -1,0 +1,11 @@
+{
+  "service": {
+    "name": "payments-api",
+    "type": "LAMBDA"
+  },
+  "metrics": [
+    { "type": "INVOCATIONS", "value": 120 },
+    { "type": "ERRORS", "value": 3 },
+    { "type": "LATENCY_MS", "value": 240 }
+  ]
+}

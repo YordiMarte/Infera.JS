@@ -6,20 +6,20 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppModule = void 0;
+exports.IngestModule = void 0;
 const common_1 = require("@nestjs/common");
-const ingest_module_1 = require("./ingest/ingest.module");
-let AppModule = class AppModule {
+const ingest_controller_1 = require("./ingest.controller");
+const ingest_service_1 = require("./ingest.service");
+const prisma_service_1 = require("../prisma.service");
+const projects_module_1 = require("../projects/projects.module");
+const health_resolver_1 = require("../health.resolver");
+let IngestModule = class IngestModule {
 };
-exports.AppModule = AppModule;
-exports.AppModule = AppModule = __decorate([
+exports.IngestModule = IngestModule;
+exports.IngestModule = IngestModule = __decorate([
     (0, common_1.Module)({
-        imports: [
-            ingest_module_1.IngestModule,
-            // GraphQLModule.forRoot<ApolloDriverConfig>({
-            //driver: ApolloDriver,
-            //autoSchemaFile: true,
-            //}),
-        ],
+        imports: [projects_module_1.ProjectsModule],
+        controllers: [ingest_controller_1.IngestController],
+        providers: [ingest_service_1.IngestService, prisma_service_1.PrismaService, health_resolver_1.HealthResolver],
     })
-], AppModule);
+], IngestModule);

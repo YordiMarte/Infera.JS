@@ -1,19 +1,31 @@
-import { Controller, Post, Body, UseGuards, Req } from '@nestjs/common';
-import { ApiKeyGuard } from './api-key.guard';
+import {
+  Controller,
+  Post,
+  Body,
+  Headers,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { IngestService } from './ingest.service';
-import { RequestWithProject } from './types/request-with-project';
-import { IngestDto } from './dto/IngestDto';
+import { ProjectsService } from '../projects/projects.service';
 
 @Controller('ingest')
 export class IngestController {
-    constructor(private ingestService: IngestService) {}
+  constructor(
+    private readonly ingestService: IngestService,
+    private readonly projectsService: ProjectsService,
+  ) {}
 
-    @Post()
-    @UseGuards(ApiKeyGuard)
-    async ingest(
-        @Req() req: RequestWithProject, 
-        @Body() body: IngestDto
-    ) {
-        return this.ingestService.ingest(req.project, body,);
-    } 
+  @Post()
+  async ingest(
+    @Headers('x-api-key') apiKey: string,
+    @Body() body: any,
+  ) {
+    const project = await this.projectsService.findByApiKey(apiKey);
+
+    if (!project) {
+      throw new UnauthorizedException('Invalid API key');
+    }
+
+    return this.ingestService.ingest(project, body);
+  }
 }

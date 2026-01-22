@@ -35,6 +35,6 @@ export class IngestService {
             });
         }
 
-        return { status: "ok" };
+        return { status: "ingested" };
     }
-}    
+}   
