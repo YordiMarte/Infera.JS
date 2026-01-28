@@ -34,7 +34,9 @@ export class IngestService {
                     serviceId: service.id,
                     type: metric.type,
                     value: metric.value,
-                    projectId: project.id
+                    projectId: {
+                        connect: { id: project.id },
+                    },
                 }
             });
         }

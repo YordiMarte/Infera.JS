@@ -4,7 +4,6 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -35,26 +34,14 @@ enum AlertType {
 }
 
 model Project {
-  id        String    @id @default(uuid())
-  name      String
-  apiKey    String    @unique
-  createdAt DateTime  @default(now())
+  id            String         @id @default(uuid())
+  costSnapshots CostSnapshot[] @relation("ProjectCostSnapshots")
+  name          String
+  apiKey        String         @unique
+  createdAt     DateTime       @default(now())
 
-  services  Service[]
-  alerts    Alert[]
-}
-
-model Service {
-  id        String   @id @default(uuid())
-  projectId String
-  name      String
-  type      String
-
-  project   Project  @relation(fields: [projectId], references: [id])
-  metrics   Metric[]
-  costs     CostSnapshot[]
-
-  @@unique([projectId, name], name: "projectId_name")
+  services Service[]
+  alerts   Alert[]
 }
 
 model Metric {
@@ -64,30 +51,48 @@ model Metric {
   value     Float
   timestamp DateTime   @default(now())
 
-  service   Service    @relation(fields: [serviceId], references: [id])
+  service Service @relation(fields: [serviceId], references: [id])
 
   @@index([serviceId, timestamp])
 }
 
+
+model Service {
+  id        String @id @default(uuid())
+  projectId String
+  name      String
+  type      String
+
+  costSnapshots CostSnapshot[]
+
+  project Project  @relation(fields: [projectId], references: [id])
+  metrics Metric[]
+
+  @@unique([projectId, name], name: "projectId_name")
+}
+
 model CostSnapshot {
-  id        String     @id @default(uuid())
+  id        String   @id @default(uuid())
   serviceId String
   costUSD   Float
-  period    DateTime   // daily snapshot
-  createdAt DateTime   @default(now())
+  period    DateTime
+  createdAt DateTime @default(now())
 
-  service   Service    @relation(fields: [serviceId], references: [id])
+  service Service @relation(fields: [serviceId], references: [id])
+
+  project   Project? @relation("ProjectCostSnapshots", fields: [projectId], references: [id])
+  projectId String?
 
   @@index([serviceId, period])
 }
 
 model Alert {
-  id         String     @id @default(uuid())
-  projectId  String
-  type       AlertType
-  threshold  Float
-  isActive   Boolean    @default(true)
-  createdAt  DateTime   @default(now())
+  id        String    @id @default(uuid())
+  projectId String
+  type      AlertType
+  threshold Float
+  isActive  Boolean   @default(true)
+  createdAt DateTime  @default(now())
 
-  project    Project    @relation(fields: [projectId], references: [id])
+  project Project @relation(fields: [projectId], references: [id])
 }

@@ -1,0 +1,51 @@
+type Query {
+  costByService(projectId: String!): [CostByService!]!
+  metricAggregates(projectId: String!): [MetricAggregate!]!
+  dashboardOverview(projectId: String!): DashboardOverview!
+}
+
+type CostByService {
+  serviceName: String!
+  serviceType: String!
+  totalCostUSD: Float!
+}
+
+type MetricAggregate {
+  type: String!
+  value: Float!
+}
+
+type DashboardOverview {
+  costs: [CostByService!]!
+  metrics: [MetricAggregate!]!
+}
+
+
+query {
+  costByService(projectId: "445bc273-d982-478a-bcae-64a856c31ad5") {
+    serviceName
+    serviceType
+    totalCostUSD
+  }
+}
+
+query {
+  metricAggregates(projectId: "445bc273-d982-478a-bcae-64a856c31ad5") {
+    type
+    value
+  }
+}
+
+query {
+  dashboardOverview(projectId: "445bc273-d982-478a-bcae-64a856c31ad5") {
+    costs {
+      serviceName
+      serviceType
+      totalCostUSD
+    }
+    metrics {
+      type
+      value
+    }
+  }
+}
