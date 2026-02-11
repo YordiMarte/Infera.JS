@@ -42,4 +42,7 @@ export async function fetchDashboard(projectId: string) {
             console.error('GraphQL excution errors:', json.errors);
             throw new Error('GraphQL execution failed');
         }
-    }
+    
+
+    return json.data.dashboardOverview;
+}

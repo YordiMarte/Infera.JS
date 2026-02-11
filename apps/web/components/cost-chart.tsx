@@ -1,3 +1,5 @@
+"use client"
+
 interface CostChartProps {
     data: Array<{
         serviceName: string;

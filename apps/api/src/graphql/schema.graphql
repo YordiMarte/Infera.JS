@@ -49,3 +49,7 @@ query {
     }
   }
 }
+
+query Test {
+__typename
+}

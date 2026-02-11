@@ -9,11 +9,21 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.HealthModule = void 0;
 const common_1 = require("@nestjs/common");
 const health_resolver_1 = require("../health.resolver");
-let HealthModule = class HealthModule {
-};
+
+
 exports.HealthModule = HealthModule;
 exports.HealthModule = HealthModule = __decorate([
     (0, common_1.Module)({
         providers: [health_resolver_1.HealthResolver],
     })
 ], HealthModule);
+
+
+// apps/api/src/health/health.module.ts
+import { Module } from '@nestjs/common';
+import { HealthResolver } from './health.resolver';
+
+@Module({
+  providers: [HealthResolver],
+})
+export class HealthModule {}

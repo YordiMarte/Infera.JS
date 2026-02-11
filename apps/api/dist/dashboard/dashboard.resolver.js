@@ -27,7 +27,7 @@ let DashboardResolver = class DashboardResolver {
                 costSnapshots: true,
             },
         });
-        return services.map(s => ({
+        return services.map((s) => ({
             serviceName: s.name,
             serviceType: s.type,
             totalCostUSD: s.costSnapshots.reduce((sum, c) => sum + c.costUSD, 0),
@@ -41,7 +41,7 @@ let DashboardResolver = class DashboardResolver {
             },
             _sum: { value: true }
         });
-        return metrics.map(m => ({
+        return metrics.map((m) => ({
             type: m.type,
             value: m._sum.value ?? 0
         }));
